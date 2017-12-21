@@ -369,12 +369,18 @@ func (m *Manager) GetJumpboxDeploymentVars(state storage.State, terraformOutputs
 		internalIP = parsedInternalCIDR.GetNthIP(5).String()
 	}
 
+	allOutputs := map[string]interface{}{}
+	for k, v := range terraformOutputs.Map {
+		allOutputs[k] = v
+	}
+	delete(allOutputs, "external_ip")
+
 	vars := sharedDeploymentVarsYAML{
-		InternalCIDR: internalCIDR,
-		InternalGW:   parsedInternalCIDR.GetNthIP(1).String(),
-		InternalIP:   internalIP,
-		DirectorName: fmt.Sprintf("bosh-%s", state.EnvID),
-		ExternalIP:   terraformOutputs.GetString("external_ip"),
+		InternalGW:       parsedInternalCIDR.GetNthIP(1).String(),
+		InternalIP:       internalIP,
+		DirectorName:     fmt.Sprintf("bosh-%s", state.EnvID),
+		ExternalIP:       terraformOutputs.GetString("external_ip"),
+		TerraformOutputs: allOutputs,
 	}
 
 	switch state.IAAS {
@@ -387,7 +393,6 @@ func (m *Manager) GetJumpboxDeploymentVars(state storage.State, terraformOutputs
 			VCenterCluster:   terraformOutputs.GetString("vcenter_cluster"),
 			VCenterRP:        terraformOutputs.GetString("vcenter_rp"),
 			VCenterDS:        terraformOutputs.GetString("vcenter_ds"),
-			NetworkName:      terraformOutputs.GetString("network_name"),
 			VCenterDisks:     terraformOutputs.GetString("vcenter_disks"),
 			VCenterVMs:       terraformOutputs.GetString("vcenter_vms"),
 			VCenterTemplates: terraformOutputs.GetString("vcenter_templates"),
@@ -455,12 +460,15 @@ func (m *Manager) GetDirectorDeploymentVars(state storage.State, terraformOutput
 		internalIP = parsedInternalCIDR.GetNthIP(6).String()
 	}
 
+	allOutputs := terraformOutputs.Map
+	delete(allOutputs, "external_ip")
+
 	vars := sharedDeploymentVarsYAML{
-		InternalCIDR: internalCIDR,
-		InternalGW:   parsedInternalCIDR.GetNthIP(1).String(),
-		InternalIP:   internalIP,
-		DirectorName: fmt.Sprintf("bosh-%s", state.EnvID),
-		ExternalIP:   terraformOutputs.GetString("bosh_director_external_ip"),
+		InternalGW:       parsedInternalCIDR.GetNthIP(1).String(),
+		InternalIP:       internalIP,
+		DirectorName:     fmt.Sprintf("bosh-%s", state.EnvID),
+		ExternalIP:       terraformOutputs.GetString("bosh_director_external_ip"),
+		TerraformOutputs: allOutputs,
 	}
 
 	switch state.IAAS {
@@ -473,7 +481,6 @@ func (m *Manager) GetDirectorDeploymentVars(state storage.State, terraformOutput
 			VCenterCluster:   terraformOutputs.GetString("vcenter_cluster"),
 			VCenterRP:        terraformOutputs.GetString("vcenter_rp"),
 			VCenterDS:        terraformOutputs.GetString("vcenter_ds"),
-			NetworkName:      terraformOutputs.GetString("network_name"),
 			VCenterDisks:     terraformOutputs.GetString("vcenter_disks"),
 			VCenterVMs:       terraformOutputs.GetString("vcenter_vms"),
 			VCenterTemplates: terraformOutputs.GetString("vcenter_templates"),

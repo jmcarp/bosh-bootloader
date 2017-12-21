@@ -168,6 +168,16 @@ tags:
 - some-director-tag
 project_id: some-project-id
 gcp_credentials_json: some-credential-json
+
+# passed thru, but not really needed
+bosh_director_tag_name: some-director-tag
+bosh_open_tag_name: some-jumpbox-tag
+director_address: some-director-address
+internal_tag_name: some-internal-tag
+jumpbox_tag_name: some-jumpbox-fw-tag
+jumpbox_url: some-jumpbox-url
+network_name: some-network
+subnetwork_name: some-subnetwork
 `))
 				Expect(boshExecutor.CreateEnvCall.CallCount).To(Equal(1))
 				Expect(boshExecutor.CreateEnvCall.Receives.Input.Deployment).To(Equal("director"))
@@ -327,14 +337,38 @@ gcp_credentials_json: some-credential-json
 				}))
 			})
 
-			It("returns a bbl state with bosh and jumpbox deployment values", func() {
+			FIt("returns a bbl state with bosh and jumpbox deployment values", func() {
 				state, err := boshManager.CreateJumpbox(state, terraformOutputs)
 				Expect(err).NotTo(HaveOccurred())
 
 				Expect(boshExecutor.CreateEnvCall.Receives.Input.VarsDir).To(Equal("some-bbl-vars-dir"))
 				Expect(boshExecutor.CreateEnvCall.Receives.Input.StateDir).To(Equal("some-state-dir"))
 				Expect(boshExecutor.CreateEnvCall.Receives.Input.Deployment).To(Equal("jumpbox"))
-				Expect(boshExecutor.CreateEnvCall.Receives.Input.DeploymentVars).To(Equal(deploymentVars))
+				Expect(boshExecutor.CreateEnvCall.Receives.Input.DeploymentVars).To(MatchYAML(`
+internal_cidr: 10.0.0.0/24
+internal_gw: 10.0.0.1
+internal_ip: 10.0.0.5
+director_name: bosh-some-env-id
+external_ip: some-external-ip
+zone: some-zone
+network: some-network
+subnetwork: some-subnetwork
+tags:
+- some-jumpbox-tag
+- some-jumpbox-fw-tag
+project_id: some-project-id
+gcp_credentials_json: some-credential-json
+
+# passed thru
+bosh_director_tag_name: some-director-tag
+bosh_open_tag_name: some-jumpbox-tag
+director_address: some-director-address
+internal_tag_name: some-internal-tag
+jumpbox_tag_name: some-jumpbox-fw-tag
+jumpbox_url: some-jumpbox-url
+network_name: some-network
+subnetwork_name: some-subnetwork
+`))
 
 				Expect(state).To(Equal(storage.State{
 					IAAS:  "gcp",

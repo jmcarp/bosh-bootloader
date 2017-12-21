@@ -1,16 +1,16 @@
 package bosh
 
 type sharedDeploymentVarsYAML struct {
-	InternalCIDR string      `yaml:"internal_cidr,omitempty"`
-	InternalGW   string      `yaml:"internal_gw,omitempty"`
-	InternalIP   string      `yaml:"internal_ip,omitempty"`
-	DirectorName string      `yaml:"director_name,omitempty"`
-	ExternalIP   string      `yaml:"external_ip,omitempty"`
-	PrivateKey   string      `yaml:"private_key,flow,omitempty"`
-	AWSYAML      AWSYAML     `yaml:",inline"`
-	GCPYAML      GCPYAML     `yaml:",inline"`
-	AzureYAML    AzureYAML   `yaml:",inline"`
-	VSphereYAML  VSphereYAML `yaml:",inline"`
+	InternalGW       string                 `yaml:"internal_gw,omitempty"`
+	InternalIP       string                 `yaml:"internal_ip,omitempty"`
+	DirectorName     string                 `yaml:"director_name,omitempty"`
+	ExternalIP       string                 `yaml:"external_ip,omitempty"`
+	PrivateKey       string                 `yaml:"private_key,flow,omitempty"`
+	AWSYAML          AWSYAML                `yaml:",inline"`
+	GCPYAML          GCPYAML                `yaml:",inline"`
+	AzureYAML        AzureYAML              `yaml:",inline"`
+	VSphereYAML      VSphereYAML            `yaml:",inline"`
+	TerraformOutputs map[string]interface{} `yaml:",inline"`
 }
 
 type AWSYAML struct {
@@ -48,7 +48,6 @@ type AzureYAML struct {
 }
 
 type VSphereYAML struct {
-	NetworkName      string `yaml:"network_name,omitempty"`
 	VCenterRP        string `yaml:"vcenter_rp,omitempty"`
 	VCenterCluster   string `yaml:"vcenter_cluster,omitempty"`
 	VCenterDC        string `yaml:"vcenter_dc,omitempty"`
