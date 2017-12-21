@@ -92,7 +92,8 @@ func (e Executor) Init(template string, input map[string]interface{}) error {
 func formatVars(inputs map[string]interface{}) string {
 	formattedVars := ""
 	for name, value := range inputs {
-		if vString, ok := value.(string); ok {
+		if alreadyFormatted(name) {
+		} else if vString, ok := value.(string); ok {
 			vString = fmt.Sprintf(`"%s"`, vString)
 			if strings.Contains(vString, "\n") {
 				vString = strings.Replace(vString, "\n", "\\n", -1)
@@ -104,6 +105,11 @@ func formatVars(inputs map[string]interface{}) string {
 		formattedVars = fmt.Sprintf("%s\n%s=%s", formattedVars, name, value)
 	}
 	return formattedVars
+}
+
+func alreadyFormatted(name string) bool {
+	//GCP Service Account Key is already formatted
+	return name == "credentials"
 }
 
 func (e Executor) runTFCommand(args []string) error {

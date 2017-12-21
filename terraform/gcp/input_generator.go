@@ -1,9 +1,11 @@
 package gcp
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/cloudfoundry/bosh-bootloader/storage"
 )
@@ -31,11 +33,13 @@ func (i InputGenerator) Generate(state storage.State) (map[string]interface{}, e
 	}
 
 	input := map[string]interface{}{
-		"env_id":        state.EnvID,
-		"project_id":    state.GCP.ProjectID,
-		"region":        state.GCP.Region,
-		"zone":          state.GCP.Zone,
-		"credentials":   credentialsPath,
+		"env_id":     state.EnvID,
+		"project_id": state.GCP.ProjectID,
+		"region":     state.GCP.Region,
+		"zone":       state.GCP.Zone,
+		"credentials": fmt.Sprintf(`<<SERVICE_ACCOUNT_KEY
+%s
+SERVICE_ACCOUNT_KEY`, strings.Trim(state.GCP.ServiceAccountKey, "\n")),
 		"system_domain": state.LB.Domain,
 	}
 

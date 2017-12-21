@@ -62,12 +62,14 @@ var _ = Describe("Executor", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		input = map[string]interface{}{
-			"availability_zones":          []string{"z1", "z2"},
-			"env_id":                      "some-env-id",
-			"project_id":                  "some-project-id",
-			"region":                      "some-region",
-			"zone":                        "some-zone",
-			"credentials":                 "some/credentials/path",
+			"availability_zones": []string{"z1", "z2"},
+			"env_id":             "some-env-id",
+			"project_id":         "some-project-id",
+			"region":             "some-region",
+			"zone":               "some-zone",
+			"credentials": `<<SERVICE_ACCOUNT_KEY
+{some-service-account-key}
+SERVICE_ACCOUNT_KEY`,
 			"system_domain":               "some-domain",
 			"ssl_certificate":             "-----BEGIN CERTIFICATE-----\nsome-certificate\n-----END CERTIFICATE-----\n",
 			"ssl_certificate_private_key": "-----BEGIN RSA PRIVATE KEY-----\nsome-private-key\n-----END RSA PRIVATE KEY-----\n",
@@ -100,7 +102,9 @@ var _ = Describe("Executor", func() {
 			Expect(string(terraformVars)).To(ContainSubstring(`project_id="some-project-id"`))
 			Expect(string(terraformVars)).To(ContainSubstring(`region="some-region"`))
 			Expect(string(terraformVars)).To(ContainSubstring(`zone="some-zone"`))
-			Expect(string(terraformVars)).To(ContainSubstring(`credentials="some/credentials/path"`))
+			Expect(string(terraformVars)).To(ContainSubstring(`credentials=<<SERVICE_ACCOUNT_KEY
+{some-service-account-key}
+SERVICE_ACCOUNT_KEY`))
 			Expect(string(terraformVars)).To(ContainSubstring(`system_domain="some-domain"`))
 			Expect(string(terraformVars)).To(ContainSubstring(`ssl_certificate="-----BEGIN CERTIFICATE-----\nsome-certificate\n-----END CERTIFICATE-----\n"`))
 			Expect(string(terraformVars)).To(ContainSubstring(`ssl_certificate_private_key="-----BEGIN RSA PRIVATE KEY-----\nsome-private-key\n-----END RSA PRIVATE KEY-----\n"`))

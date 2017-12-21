@@ -88,7 +88,7 @@ func templatesBosh_directorTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/bosh_director.tf", size: 2905, mode: os.FileMode(480), modTime: time.Unix(1513817862, 0)}
+	info := bindataFileInfo{name: "templates/bosh_director.tf", size: 2905, mode: os.FileMode(480), modTime: time.Unix(1513818666, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -108,7 +108,7 @@ func templatesCf_dnsTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/cf_dns.tf", size: 2730, mode: os.FileMode(480), modTime: time.Unix(1513817905, 0)}
+	info := bindataFileInfo{name: "templates/cf_dns.tf", size: 2730, mode: os.FileMode(480), modTime: time.Unix(1513818665, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -128,7 +128,7 @@ func templatesCf_lbTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/cf_lb.tf", size: 7580, mode: os.FileMode(480), modTime: time.Unix(1513817906, 0)}
+	info := bindataFileInfo{name: "templates/cf_lb.tf", size: 7580, mode: os.FileMode(480), modTime: time.Unix(1513818663, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -148,7 +148,7 @@ func templatesConcourse_lbTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/concourse_lb.tf", size: 1571, mode: os.FileMode(480), modTime: time.Unix(1513817908, 0)}
+	info := bindataFileInfo{name: "templates/concourse_lb.tf", size: 1571, mode: os.FileMode(480), modTime: time.Unix(1513818659, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -168,12 +168,12 @@ func templatesJumpboxTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/jumpbox.tf", size: 358, mode: os.FileMode(480), modTime: time.Unix(1513817910, 0)}
+	info := bindataFileInfo{name: "templates/jumpbox.tf", size: 358, mode: os.FileMode(480), modTime: time.Unix(1513818657, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _templatesVarsTf = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x8c\xd0\x41\xaa\x03\x21\x0c\x06\xe0\xbd\xa7\x08\x61\x16\xef\x6d\x7a\x83\x9e\xa5\xd8\x31\x95\x14\x31\x92\x11\xa1\x15\xef\x5e\x9c\x19\x98\xe9\xa2\xa0\x4b\xf3\x85\x3f\xfc\xc5\x2a\xdb\x7b\x20\xc0\xa4\xf2\xa4\x39\xdf\xd8\x21\x54\x03\x90\x5f\x89\xe0\x0a\xb8\x64\xe5\xe8\xd1\x34\x63\x0e\xac\xe4\x59\xe2\x00\x7c\x4b\xa4\x01\x46\xb1\x8c\x05\xcf\x4a\x8e\x62\x66\x1b\x96\x9f\x3a\xa9\x14\x76\xa4\x80\x5e\xc4\x87\x3d\xff\xb4\xd9\xfd\x54\x1f\x1c\xe8\x0f\xa7\x5a\xac\x5e\x4e\xc3\x86\xff\x0d\x0d\xc0\xde\x07\xf4\xb7\xfa\xee\x8e\x92\x56\xb3\xd5\x00\xdf\x66\xfb\x6c\xfd\x94\x4f\x00\x00\x00\xff\xff\xeb\xf1\x4c\x79\x5e\x01\x00\x00")
+var _templatesVarsTf = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x8c\xd0\x41\xca\xc3\x20\x10\x05\xe0\xbd\xa7\x78\x0c\xff\xfa\xbf\x41\xcf\x52\x6c\x32\xc8\x14\x71\x64\x22\x42\x1b\xbc\x7b\xb1\x09\x4d\xba\x28\xe8\xf2\xf1\xc9\x63\x5e\xf5\x26\xfe\x16\x19\x94\x4d\xef\x3c\x95\xab\xcc\x84\xd5\x01\xe5\x91\x19\x17\xd0\x52\x4c\x52\x20\xd7\x9c\x3b\xb0\x71\x10\x4d\x03\xf0\xa9\x89\x07\x18\xa7\x3a\x56\x3c\x19\xcf\x9c\x8a\xf8\xb8\xfc\xd4\xd9\xb4\xca\xcc\x06\x0a\xaa\x21\xee\xfd\xa7\x9f\xdd\xff\xad\xd5\xdb\xff\x29\x6c\xe4\x80\x7d\x04\xf4\xf7\x41\xc7\x32\x6f\xb3\xdd\x8e\x6f\xb3\x85\xad\xf7\xbf\x02\x00\x00\xff\xff\xb3\x6b\x5f\x21\x53\x01\x00\x00")
 
 func templatesVarsTfBytes() ([]byte, error) {
 	return bindataRead(
@@ -188,7 +188,7 @@ func templatesVarsTf() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/vars.tf", size: 350, mode: os.FileMode(480), modTime: time.Unix(1513817913, 0)}
+	info := bindataFileInfo{name: "templates/vars.tf", size: 339, mode: os.FileMode(480), modTime: time.Unix(1513818756, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }

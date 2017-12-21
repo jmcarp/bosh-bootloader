@@ -63,13 +63,9 @@ var _ = Describe("InputGenerator", func() {
 			"project_id":    state.GCP.ProjectID,
 			"region":        state.GCP.Region,
 			"zone":          state.GCP.Zone,
-			"credentials":   filepath.Join(tempDir, "credentials.json"),
+			"credentials":   "<<SERVICE_ACCOUNT_KEY\nsome-service-account-key\nSERVICE_ACCOUNT_KEY",
 			"system_domain": state.LB.Domain,
 		}))
-
-		credentials, err := ioutil.ReadFile(inputs["credentials"].(string))
-		Expect(err).NotTo(HaveOccurred())
-		Expect(string(credentials)).To(Equal("some-service-account-key"))
 	})
 
 	Context("when cert and key are provided", func() {
@@ -87,7 +83,7 @@ var _ = Describe("InputGenerator", func() {
 				"project_id":                  state.GCP.ProjectID,
 				"region":                      state.GCP.Region,
 				"zone":                        state.GCP.Zone,
-				"credentials":                 filepath.Join(tempDir, "credentials.json"),
+				"credentials":                 "<<SERVICE_ACCOUNT_KEY\nsome-service-account-key\nSERVICE_ACCOUNT_KEY",
 				"ssl_certificate":             filepath.Join(tempDir, "cert"),
 				"ssl_certificate_private_key": filepath.Join(tempDir, "key"),
 				"system_domain":               state.LB.Domain,
