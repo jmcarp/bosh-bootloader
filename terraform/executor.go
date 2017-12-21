@@ -143,11 +143,15 @@ func (e Executor) runTFCommand(args []string) error {
 	return nil
 }
 
-func (e Executor) Apply() error {
-	return e.runTFCommand([]string{"apply", "--auto-approve"})
+func (e Executor) Apply(input map[string]string) error {
+	args := []string{"apply", "--auto-approve"}
+	for k, v := range input {
+		args = append(args, "-var", fmt.Sprintf("%s=%s", k, v))
+	}
+	return e.runTFCommand(args)
 }
 
-func (e Executor) Destroy(input map[string]interface{}) error {
+func (e Executor) Destroy() error {
 	return e.runTFCommand([]string{"destroy", "-force"})
 }
 

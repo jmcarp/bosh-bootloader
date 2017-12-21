@@ -448,7 +448,9 @@ func parseServiceAccountKey(serviceAccountKey string) (string, string, error) {
 
 	if _, err := os.Stat(serviceAccountKey); err != nil {
 		key = serviceAccountKey
+		//Write it to a tmp dir
 	} else {
+		//Set this path on the object
 		rawServiceAccountKey, err := ioutil.ReadFile(serviceAccountKey)
 		if err != nil {
 			return "", "", fmt.Errorf("error reading service account key from file: %v", err)

@@ -19,9 +19,9 @@ type Manager struct {
 
 type executor interface {
 	Version() (string, error)
-	Destroy(inputs map[string]interface{}) error
+	Destroy() error
 	Init(terraformTemplate string, inputs map[string]interface{}) error
-	Apply() error
+	Apply(inputs map[string]interface{}) error
 	Outputs() (map[string]interface{}, error)
 	Output(string) (string, error)
 }
@@ -79,7 +79,7 @@ func (m Manager) Init(bblState storage.State) error {
 	m.logger.Step("generating terraform template")
 	template := m.templateGenerator.Generate(bblState)
 
-	m.logger.Step("generating terraform variables")
+	m.logger.Step("generating terraform inputs")
 	input, err := m.inputGenerator.Generate(bblState)
 	if err != nil {
 		return fmt.Errorf("Input generator generate: %s", err)
@@ -95,7 +95,12 @@ func (m Manager) Init(bblState storage.State) error {
 
 func (m Manager) Apply(bblState storage.State) (storage.State, error) {
 	m.logger.Step("terraform apply")
-	err := m.executor.Apply()
+	//Create the tmp service account key path
+	inputs := map[string]string{}
+	if bblState.IAAS == "gcp" {
+		inputs["credentials"] = state.GCP.ServiceAccountKeyPath
+	}
+	err := m.executor.Apply(inputs)
 
 	bblState.LatestTFOutput = readAndReset(m.terraformOutputBuffer)
 
@@ -108,14 +113,14 @@ func (m Manager) Apply(bblState storage.State) (storage.State, error) {
 
 func (m Manager) Destroy(bblState storage.State) (storage.State, error) {
 	m.logger.Step("destroying infrastructure")
-	m.logger.Step("generating terraform variables")
-	input, err := m.inputGenerator.Generate(bblState)
+	m.logger.Step("generating terraform inputs")
+	_, err := m.inputGenerator.Generate(bblState)
 	if err != nil {
 		return storage.State{}, fmt.Errorf("Input generator generate: %s", err)
 	}
 
 	m.logger.Step("terraform destroy")
-	err = m.executor.Destroy(input)
+	err = m.executor.Destroy()
 
 	bblState.LatestTFOutput = readAndReset(m.terraformOutputBuffer)
 
